@@ -42,6 +42,7 @@ async function run() {
       res.send(orders);
   })
 
+
     app.get('/tours/:id', async (req, res) =>{
       const id = (req.params.id);
       //console.log('the id is:',id);
@@ -52,6 +53,18 @@ async function run() {
       res.json(user);
       //console.log('Detailing shows of:',user)
     })
+
+    app.get('/orders/:id', async (req, res) =>{
+      const id = (req.params.id);
+      //console.log('the id is:',id);
+      const query = await {_id: ObjectId(id)};
+      console.log(query);
+      const result = await bookingCollection.findOne(query);
+      console.log(result);
+      res.json(user);
+      //console.log('Detailing shows of:',user)
+    })
+
 
 
      //POST API
@@ -83,6 +96,27 @@ async function run() {
       console.log('deleting with id:', result);
       res.json(result);
     })
+
+    //UPDATE API
+    app.put('/orders/:id', async(req, res) =>{
+      const id = req.params.id;
+      const updateUser = req.body;
+      const filter = { _id: ObjectId(id)};
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          name: updateUser.name,
+          email: updateUser.email
+        }
+      }
+
+      const result = await bookingCollection.updateOne(filter, updateDoc, options);
+      res.json(result);
+     //console.log('updating user', id);
+    })
+
+
+
 
   } finally {
     //await client.close();

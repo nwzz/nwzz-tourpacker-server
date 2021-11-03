@@ -110,8 +110,9 @@ async function run() {
       const options = { upsert: true };
       const updateDoc = {
         $set: {
-          name: updateUser.name,
-          email: updateUser.email
+          firstName: updateUser.firstName,
+          email: updateUser.email,
+          reservationDate: updateUser.reservationDate
         }
       }
 

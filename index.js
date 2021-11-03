@@ -28,12 +28,14 @@ async function run() {
     console.log('mongodb Connected');
 
 
+
     //GET API
     app.get('/tours', async (req, res) =>{
         const cursor = dataCollection.find({});
         const tours = await cursor.toArray();
         res.send(tours);
     })
+
 
 
     app.get('/orders', async (req, res) =>{
@@ -43,25 +45,28 @@ async function run() {
   })
 
 
+
     app.get('/tours/:id', async (req, res) =>{
       const id = (req.params.id);
       //console.log('the id is:',id);
       const query = await { _id: ObjectId(id)};
       console.log(query);
-      const user = await dataCollection.findOne(query);
-      console.log(user);
-      res.json(user);
+      const result = await dataCollection.findOne(query);
+      console.log(result);
+      res.json(result);
       //console.log('Detailing shows of:',user)
     })
 
+ 
+ 
     app.get('/orders/:id', async (req, res) =>{
       const id = (req.params.id);
       //console.log('the id is:',id);
       const query = await {_id: ObjectId(id)};
       console.log(query);
       const result = await bookingCollection.findOne(query);
-      console.log(result);
-      res.json(user);
+      //console.log(result);
+      res.json(result);
       //console.log('Detailing shows of:',user)
     })
 
